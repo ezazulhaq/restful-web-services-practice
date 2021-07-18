@@ -25,7 +25,11 @@ public class UserController {
 
     @GetMapping(path = "/user/{id}")
     public User fetchOneUser(@PathVariable Integer id) {
-        return userService.findUserOne(id);
+        User user = userService.findUserOne(id);
+        if (user == null) {
+            throw new UserNotFoundException("id - " + id);
+        }
+        return user;
     }
 
     // Creats new user with response code - 200 OK
