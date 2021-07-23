@@ -3,6 +3,8 @@ package com.haa.rest.webservices.restfulwebservices.user;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +43,7 @@ public class UserController {
 
     // Best Practice - Create new user with correct response code - 201 Created
     @PostMapping(path = "/users")
-    public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody UserModel user) {
         UserModel saveUser = userService.saveUser(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveUser.getId())
