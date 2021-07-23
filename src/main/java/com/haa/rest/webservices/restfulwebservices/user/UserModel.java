@@ -2,7 +2,7 @@ package com.haa.rest.webservices.restfulwebservices.user;
 
 import java.util.Date;
 
-public class User {
+public class UserModel {
 
     private Integer id;
 
@@ -10,10 +10,10 @@ public class User {
 
     private Date birthDate;
 
-    public User() {
+    public UserModel() {
     }
 
-    public User(Integer id, String name, Date birthDate) {
+    public UserModel(Integer id, String name, Date birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;

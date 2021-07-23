@@ -10,23 +10,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService implements IUserService {
 
-    private static List<User> users = new ArrayList<>();
+    private static List<UserModel> users = new ArrayList<>();
 
     private Integer userCounter = 3;
 
     static {
-        users.add(new User(1, "Eke", new Date()));
-        users.add(new User(2, "Meha", new Date()));
-        users.add(new User(3, "Kua", new Date()));
+        users.add(new UserModel(1, "Eke", new Date()));
+        users.add(new UserModel(2, "Meha", new Date()));
+        users.add(new UserModel(3, "Kua", new Date()));
     }
 
     @Override
-    public List<User> findUserAll() {
+    public List<UserModel> findUserAll() {
         return users;
     }
 
     @Override
-    public User saveUser(User user) {
+    public UserModel saveUser(UserModel user) {
         if (user.getId() == null) {
             user.setId(++userCounter);
         }
@@ -36,8 +36,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findUserOne(Integer id) {
-        for (User user : users) {
+    public UserModel findUserOne(Integer id) {
+        for (UserModel user : users) {
             if (user.getId().equals(id)) {
                 return user;
             }
@@ -46,10 +46,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User deleteUser(Integer id) {
-        Iterator<User> iterator = users.iterator();
+    public UserModel deleteUser(Integer id) {
+        Iterator<UserModel> iterator = users.iterator();
         while (iterator.hasNext()) {
-            User user = iterator.next();
+            UserModel user = iterator.next();
             if (user.getId().equals(id)) {
                 iterator.remove();
                 return user;

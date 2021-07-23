@@ -20,13 +20,13 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping(path = "/users")
-    public List<User> fetchAllUsers() {
+    public List<UserModel> fetchAllUsers() {
         return userService.findUserAll();
     }
 
     @GetMapping(path = "/user/{id}")
-    public User fetchOneUser(@PathVariable Integer id) {
-        User user = userService.findUserOne(id);
+    public UserModel fetchOneUser(@PathVariable Integer id) {
+        UserModel user = userService.findUserOne(id);
         if (user == null) {
             throw new UserNotFoundException("id - " + id);
         }
@@ -35,14 +35,14 @@ public class UserController {
 
     // Creats new user with response code - 200 OK
     @PostMapping(path = "/users-create")
-    public void createUserOld(@RequestBody User user) {
+    public void createUserOld(@RequestBody UserModel user) {
         userService.saveUser(user);
     }
 
     // Best Practice - Create new user with correct response code - 201 Created
     @PostMapping(path = "/users")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
-        User saveUser = userService.saveUser(user);
+    public ResponseEntity<Object> createUser(@RequestBody UserModel user) {
+        UserModel saveUser = userService.saveUser(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveUser.getId())
                 .toUri();
@@ -52,7 +52,7 @@ public class UserController {
 
     @DeleteMapping(path = "/user/{id}")
     public void deleteUser(@PathVariable Integer id) {
-        User user = userService.deleteUser(id);
+        UserModel user = userService.deleteUser(id);
 
         if (user == null)
             throw new UserNotFoundException("id - " + id);

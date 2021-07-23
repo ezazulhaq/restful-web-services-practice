@@ -3,11 +3,11 @@ package com.haa.rest.webservices.restfulwebservices.user;
 import java.util.List;
 
 public interface IUserService {
-    public List<User> findUserAll();
+    public List<UserModel> findUserAll();
 
-    public User saveUser(User user);
+    public UserModel saveUser(UserModel user);
 
-    public User findUserOne(Integer id);
+    public UserModel findUserOne(Integer id);
 
-    public User deleteUser(Integer id);
+    public UserModel deleteUser(Integer id);
 }
