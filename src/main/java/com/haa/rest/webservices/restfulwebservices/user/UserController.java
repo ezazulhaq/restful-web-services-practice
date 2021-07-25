@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +30,19 @@ public class UserController {
     }
 
     @GetMapping(path = "/user/{id}")
-    public UserModel fetchOneUser(@PathVariable Integer id) {
+    public EntityModel<UserModel> fetchOneUser(@PathVariable Integer id) {
         UserModel user = userService.findUserOne(id);
         if (user == null) {
             throw new UserNotFoundException("id - " + id);
         }
-        return user;
+
+        EntityModel<UserModel> model = EntityModel.of(user);
+
+        WebMvcLinkBuilder linkBuilder = linkTo(methodOn(this.getClass()).fetchAllUsers());
+
+        model.add(linkBuilder.withRel("all-users"));
+
+        return model;
     }
 
     // Creats new user with response code - 200 OK
