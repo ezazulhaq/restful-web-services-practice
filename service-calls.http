@@ -1,3 +1,7 @@
+# Monitoring tool plugin requests
+GET http://localhost:8081/actuator HTTP/1.1
+
+###
 # Hello world Services
 GET http://localhost:8081/hello-world HTTP/1.1
 ###
