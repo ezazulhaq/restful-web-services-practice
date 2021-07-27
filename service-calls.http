@@ -14,6 +14,7 @@ Accept-Language: nl
 ###
 # User Services
 GET http://localhost:8081/users HTTP/1.1
+Accept: application/xml
 ###
 GET http://localhost:8081/user/4 HTTP/1.1
 ###
