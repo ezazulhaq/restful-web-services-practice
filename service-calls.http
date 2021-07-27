@@ -10,6 +10,12 @@ GET http://localhost:8081/hello-world-bean HTTP/1.1
 GET http://localhost:8081/hello-world-internationalize HTTP/1.1
 Accept-Language: nl
 
+###
+# Filtering response Json
+GET http://localhost:8081/filter HTTP/1.1
+###
+GET http://localhost:8081/filter-list HTTP/1.1
+
 
 ###
 # User Services
