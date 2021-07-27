@@ -6,6 +6,9 @@ GET http://localhost:8081/actuator HTTP/1.1
 GET http://localhost:8081/hello-world HTTP/1.1
 ###
 GET http://localhost:8081/hello-world-bean HTTP/1.1
+###
+GET http://localhost:8081/hello-world-internationalize HTTP/1.1
+Accept-Language: nl
 
 
 ###
