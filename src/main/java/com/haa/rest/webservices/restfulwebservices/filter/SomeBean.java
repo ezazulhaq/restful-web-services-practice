@@ -1,9 +1,15 @@
 package com.haa.rest.webservices.restfulwebservices.filter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SomeBean {
 
     private String field1;
+
+    @JsonIgnore
     private String field2;
+
+    @JsonIgnore
     private String field3;
 
     public SomeBean(String field1, String field2, String field3) {
