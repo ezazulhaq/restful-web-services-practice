@@ -40,3 +40,7 @@ DELETE http://localhost:8081/user/2 HTTP/1.1
 GET http://localhost:8081/v1/person HTTP/1.1
 ###
 GET http://localhost:8081/v2/person HTTP/1.1
+###
+GET http://localhost:8081/person/param?version=1 HTTP/1.1
+###
+GET http://localhost:8081/person/param?version=2 HTTP/1.1
