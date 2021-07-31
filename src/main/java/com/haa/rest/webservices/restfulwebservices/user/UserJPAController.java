@@ -2,6 +2,7 @@ package com.haa.rest.webservices.restfulwebservices.user;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,9 +23,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserJPAController {
 
     @Autowired
-    private IUserService userService;
-
-    @Autowired
     private UserRepository userRepository;
 
     @GetMapping(path = "/jpa/users")
@@ -34,12 +32,12 @@ public class UserJPAController {
 
     @GetMapping(path = "/jpa/user/{id}")
     public EntityModel<UserModel> fetchOneUser(@PathVariable Integer id) {
-        UserModel user = userService.findUserOne(id);
-        if (user == null) {
+        Optional<UserModel> user = userRepository.findById(id);
+        if (!user.isPresent()) {
             throw new UserNotFoundException("id - " + id);
         }
 
-        EntityModel<UserModel> model = EntityModel.of(user);
+        EntityModel<UserModel> model = EntityModel.of(user.get());
 
         WebMvcLinkBuilder linkBuilder = linkTo(methodOn(this.getClass()).fetchAllUsers());
 
@@ -51,13 +49,13 @@ public class UserJPAController {
     // Creats new user with response code - 200 OK
     @PostMapping(path = "/jpa/users-create")
     public void createUserOld(@RequestBody UserModel user) {
-        userService.saveUser(user);
+        userRepository.save(user);
     }
 
     // Best Practice - Create new user with correct response code - 201 Created
     @PostMapping(path = "/jpa/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserModel user) {
-        UserModel saveUser = userService.saveUser(user);
+        UserModel saveUser = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveUser.getId())
                 .toUri();
@@ -67,10 +65,11 @@ public class UserJPAController {
 
     @DeleteMapping(path = "/jpa/user/{id}")
     public void deleteUser(@PathVariable Integer id) {
-        UserModel user = userService.deleteUser(id);
-
-        if (user == null)
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception e) {
             throw new UserNotFoundException("id - " + id);
+        }
     }
 
 }

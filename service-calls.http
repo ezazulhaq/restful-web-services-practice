@@ -56,3 +56,19 @@ Accept: application/vnd.company.app-v1+json
 ###
 GET http://localhost:8081/person/produces HTTP/1.1
 Accept: application/vnd.company.app-v2+json
+
+# User Services using JPA
+###
+GET http://localhost:8081/jpa/users HTTP/1.1
+###
+GET http://localhost:8081/jpa/user/2 HTTP/1.1
+###
+POST http://localhost:8081/jpa/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Hugama",
+  "birthDate": "2021-07-18T14:15:37.426+00:00"
+}
+###
+DELETE http://localhost:8081/jpa/user/1 HTTP/1.1
