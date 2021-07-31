@@ -1,12 +1,16 @@
 package com.haa.rest.webservices.restfulwebservices.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.haa.rest.webservices.restfulwebservices.posts.Posts;
 
 @Entity
 public class UserModel {
@@ -20,6 +24,9 @@ public class UserModel {
 
     @Past
     private Date birthDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Posts> posts;
 
     public UserModel() {
     }
