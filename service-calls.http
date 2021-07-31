@@ -50,3 +50,9 @@ X-API-VERSION: 1
 ###
 GET http://localhost:8081/person/header HTTP/1.1
 X-API-VERSION: 2
+###
+GET http://localhost:8081/person/produces HTTP/1.1
+Accept: application/vnd.company.app-v1+json
+###
+GET http://localhost:8081/person/produces HTTP/1.1
+Accept: application/vnd.company.app-v2+json
