@@ -92,7 +92,7 @@ public class UserJPAController {
     }
 
     @PostMapping(path = "/jpa/user/{id}/posts")
-    public void createPosts(@PathVariable Integer id, @RequestBody Posts post) {
+    public ResponseEntity<Object> createPosts(@PathVariable Integer id, @RequestBody Posts post) {
         Optional<UserModel> user = userRepository.findById(id);
 
         if (!user.isPresent()) {
@@ -101,7 +101,12 @@ public class UserJPAController {
 
         post.setUser(user.get());
 
-        postRepository.save(post);
+        Posts posts = postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(posts.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
 }
