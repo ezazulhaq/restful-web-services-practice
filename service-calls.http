@@ -84,3 +84,5 @@ Content-Type: application/json
 {
   "description": "My Post"
 }
+###
+GET http://localhost:8081/jpa/user/10001/post/11002 HTTP/1.1
