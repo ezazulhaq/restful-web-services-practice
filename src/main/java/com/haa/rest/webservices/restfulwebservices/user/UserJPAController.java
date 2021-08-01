@@ -6,9 +6,12 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.haa.rest.webservices.restfulwebservices.posts.PostRepository;
 import com.haa.rest.webservices.restfulwebservices.posts.Posts;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -26,6 +29,9 @@ public class UserJPAController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping(path = "/jpa/users")
     public List<UserModel> fetchAllUsers() {
@@ -83,6 +89,19 @@ public class UserJPAController {
         }
 
         return user.get().getPosts();
+    }
+
+    @PostMapping(path = "/jpa/user/{id}/posts")
+    public void createPosts(@PathVariable Integer id, @RequestBody Posts post) {
+        Optional<UserModel> user = userRepository.findById(id);
+
+        if (!user.isPresent()) {
+            throw new UserNotFoundException("id - " + id);
+        }
+
+        post.setUser(user.get());
+
+        postRepository.save(post);
     }
 
 }
