@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.haa.rest.webservices.restfulwebservices.user.UserModel;
 
 @Entity
@@ -18,6 +19,7 @@ public class Posts {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private UserModel user;
 
     public Integer getId() {

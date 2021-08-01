@@ -61,4 +61,12 @@ public class UserModel {
         this.birthDate = birthDate;
     }
 
+    public List<Posts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Posts> posts) {
+        this.posts = posts;
+    }
+
 }

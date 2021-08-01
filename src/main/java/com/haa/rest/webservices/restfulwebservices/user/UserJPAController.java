@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.haa.rest.webservices.restfulwebservices.posts.Posts;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -70,6 +72,17 @@ public class UserJPAController {
         } catch (Exception e) {
             throw new UserNotFoundException("id - " + id);
         }
+    }
+
+    @GetMapping(path = "/jpa/user/{id}/posts")
+    public List<Posts> fetchAllPostOfUser(@PathVariable Integer id) {
+        Optional<UserModel> user = userRepository.findById(id);
+
+        if (!user.isPresent()) {
+            throw new UserNotFoundException("id - " + id);
+        }
+
+        return user.get().getPosts();
     }
 
 }
