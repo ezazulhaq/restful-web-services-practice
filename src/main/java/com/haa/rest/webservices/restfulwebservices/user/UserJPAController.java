@@ -11,7 +11,6 @@ import com.haa.rest.webservices.restfulwebservices.posts.Posts;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -131,6 +130,23 @@ public class UserJPAController {
         model.add(linkBuilder.withRel("all-posts-of-user"));
 
         return model;
+    }
+
+    @DeleteMapping(path = "/jpa/user/{userId}/post/{postId}")
+    public void deletePostFromUser(@PathVariable Integer userId, @PathVariable Integer postId) {
+        Optional<UserModel> user = userRepository.findById(userId);
+
+        if (!user.isPresent()) {
+            throw new UserNotFoundException("id - " + userId);
+        }
+
+        Optional<Posts> posts = postRepository.findById(postId);
+
+        if (!posts.isPresent()) {
+            throw new UserNotFoundException("post Id - " + postId);
+        }
+
+        postRepository.deleteById(postId);
     }
 
 }
