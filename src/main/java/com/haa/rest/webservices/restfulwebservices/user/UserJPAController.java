@@ -110,7 +110,7 @@ public class UserJPAController {
     }
 
     @GetMapping(path = "/jpa/user/{userId}/post/{postId}")
-    public Posts fetchPostOfUser(@PathVariable Integer userId, @PathVariable Integer postId) {
+    public EntityModel<Posts> fetchPostOfUser(@PathVariable Integer userId, @PathVariable Integer postId) {
 
         Optional<UserModel> user = userRepository.findById(userId);
 
@@ -124,7 +124,13 @@ public class UserJPAController {
             throw new UserNotFoundException("post Id - " + postId);
         }
 
-        return posts.get();
+        EntityModel<Posts> model = EntityModel.of(posts.get());
+
+        WebMvcLinkBuilder linkBuilder = linkTo(methodOn(this.getClass()).fetchAllPostOfUser(userId));
+
+        model.add(linkBuilder.withRel("all-posts-of-user"));
+
+        return model;
     }
 
 }
