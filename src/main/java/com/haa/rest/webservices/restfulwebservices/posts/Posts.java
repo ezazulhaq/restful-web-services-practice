@@ -3,6 +3,7 @@ package com.haa.rest.webservices.restfulwebservices.posts;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -13,7 +14,7 @@ import com.haa.rest.webservices.restfulwebservices.user.UserModel;
 public class Posts {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String description;
